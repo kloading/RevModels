@@ -1,8 +1,8 @@
 pragma solidity ^0.4.0;
-contract subscription {
+contract bandwagon {
     
     User public userInfo;
-
+    address public appOwner = 0xac4013A20D0FDb5908673CBCD4d400e3DC68726b;
     struct User {
         address userAddr;
         Subscription subInfo;
@@ -13,9 +13,15 @@ contract subscription {
         uint expiry;
     }
     
-    modifier ownerOnly()
+    modifier userOnly()
     {
         if(msg.sender != userInfo.userAddr) { revert(); }
+        else _;
+    }
+    
+    modifier appOwnerOnly()
+    {
+        if(msg.sender != appOwner) { revert(); }
         else _;
     }
     
@@ -25,7 +31,7 @@ contract subscription {
     }
     
     //Subscribe for 1 month. Costs 1 ETH
-    function subscribe() public ownerOnly payable 
+    function subscribe() public userOnly payable 
     {
         require(msg.value == 1 ether); //if not met, function will throw and return money minus gas
         userInfo.subInfo.status = true;
@@ -44,9 +50,9 @@ contract subscription {
         } else {
             return true;
         }
-    } 
+    }
     
-    function rewind() public ownerOnly returns(bool success)
+    function rewind() public userOnly returns(bool success)
     {
         if(checkSubscription() != true) {
             return false;
@@ -66,4 +72,9 @@ contract subscription {
         }
     }
     
+    function widthdrawFunds() public appOwnerOnly
+    {
+        selfdestruct(appOwner);
+    }
+
 }

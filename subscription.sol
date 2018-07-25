@@ -44,7 +44,7 @@ contract subscription {
         } else {
             return true;
         }
-    }
+    } 
     
     function rewind() public ownerOnly returns(bool success)
     {

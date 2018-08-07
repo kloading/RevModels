@@ -30,12 +30,13 @@ contract bandwagon {
         userInfo = User({userAddr: msg.sender, subInfo: Subscription({ status: false, expiry: block.timestamp }) });
     }
     
-    //Subscribe for 1 month. Costs 1 ETH
+    //Subscribe for 1 month. Costs 1 ETH + gas
     function subscribe() public userOnly payable 
     {
         require(msg.value == 1 ether); //if not met, function will throw and return money minus gas
         userInfo.subInfo.status = true;
         userInfo.subInfo.expiry = block.timestamp + 30 days;
+        appOwner.transfer(1 ether);
     }
     
     //Function used internally to evaluate subscriptions status (can make a state change)
@@ -70,11 +71,6 @@ contract bandwagon {
         } else {
             return true;
         }
-    }
-    
-    function widthdrawFunds() public appOwnerOnly
-    {
-        selfdestruct(appOwner);
     }
 
 }

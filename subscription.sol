@@ -3,9 +3,11 @@ contract subscription {
     
     User public userInfo;
     address public appOwner = 0xac4013A20D0FDb5908673CBCD4d400e3DC68726b;
-    struct User {
-        address userAddr;
-        Subscription subInfo;
+    struct User {        
+       address userAddr;      
+       Subscription subInfo;  
+       bytes current;        
+       bytes previous;        
     }
     
     struct Subscription {
@@ -58,7 +60,8 @@ contract subscription {
         if(checkSubscription() != true) {
             return false;
         } else {
-            //Show previous card
+            userInfo.current = previous; //rewinding swipe
+            userInfo.previous = "";        
             return true;
         }
     }

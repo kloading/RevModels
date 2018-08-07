@@ -1,5 +1,5 @@
 pragma solidity ^0.4.0;
-contract bandwagon {
+contract subscription {
     
     User public userInfo;
     address public appOwner = 0xac4013A20D0FDb5908673CBCD4d400e3DC68726b;

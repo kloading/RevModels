@@ -29,7 +29,8 @@ contract subscription {
     
     constructor() public 
     {
-        userInfo = User({userAddr: msg.sender, subInfo: Subscription({ status: false, expiry: block.timestamp }) });
+        userInfo = User({userAddr: msg.sender, subInfo: Subscription({ status: false, expiry: block.timestamp }), current:"Qm78fg903b9209rh20f03dla",
+     previous:""});
     }
     
     //Subscribe for 1 month. Costs 1 ETH + gas
